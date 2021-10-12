@@ -1,13 +1,14 @@
 import  './List.scss'
+import ListItem from "./ListItem";
 
-const List = ({items}) => {
+
+const List = ({items, isRemovable, popupHandeler}) => {
     return (
-        <ul className="list">
+        <ul
+            onClick={popupHandeler}
+            className="list">
             {items.map(el => (
-                <li className={el.active ? 'active' : ''}>
-                    {el.icon ? <img className='list__img' src={el.icon} alt="#"/> : <i className={`badge badge--${el.color}`}></i>}
-                    <span>{el.title}</span>
-                </li>
+                <ListItem el={el} isRemovable={isRemovable}/>
             ))}
         </ul>
     );

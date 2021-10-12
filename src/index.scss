@@ -158,6 +158,10 @@ h1, h2, h3, h4, h5, h6, p{
 li{
   list-style: none;
 }
+button{
+  border: none;
+  background-color: transparent;
+}
 .todo{
   position: absolute;
   left: 50%;
@@ -167,24 +171,40 @@ li{
   transform: translate(-50%, -50%);
   border-radius: 10px;
   box-shadow: 1px 2px 20px #f3f3f3;
+  display: flex;
   &__sidebar{
     background-color: #f4f6f8;
     width: 200px;
     height: 100%;
     border-right: 1px solid #f4f6f8;
     padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
   }
-
 }
-
-
-
-
-
-
-
-
-
-
+.input {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #dbdbdb;
+  margin-bottom: 10px;
+  &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+  }
+}
+.btn-default{
+  cursor: pointer;
+  color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #42b883;
+  padding: 10px;
+  transition: background-color 200ms ease-in-out;
+  &:hover{
+    background-color: darken(#42b883, 10%);
+  }
+}
 
 

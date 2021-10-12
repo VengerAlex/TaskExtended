@@ -1,0 +1,43 @@
+.popup {
+  margin-top: auto;
+  position: relative;
+
+  &__list {
+    position: absolute;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 1px 2px 20px #cec9c9;
+    display: block;
+  }
+  &__btn{
+    width: 100%;
+  }
+
+  &__close {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    border: none;
+    cursor: pointer;
+  }
+  &__circle{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    & + &{
+      margin-left: 5px;
+    }
+  }
+}
+
+.popup__circle.active{
+  border: 1px solid black;
+}
+
+
