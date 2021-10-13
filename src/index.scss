@@ -207,4 +207,38 @@ button{
   }
 }
 
+.todo{
+  &__tasks{
+    padding: 30px;
+  }
+  &__title{
+    margin-bottom: 30px;
+  }
+  &__wrapper{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &__checkbox{
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    &:checked + label::before{
+      background-color: #42b883;
+    }
+  }
 
+  &__label{
+    cursor: pointer;
+    display: flex;
+    &::before{
+      content: '';
+      margin-right: 15px;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
+      border: 2px solid gray;
+    }
+
+  }
+}

@@ -23,7 +23,6 @@ const AddListBtn = ({colors, setItems}) => {
             color: color.hex,
             colorId: color.id
         }
-        console.log(obj)
 
         setItems(prev => [...prev, obj])
         setValue('')
