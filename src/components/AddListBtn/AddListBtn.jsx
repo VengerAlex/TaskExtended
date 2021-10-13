@@ -12,6 +12,8 @@ const AddListBtn = ({colors, submitHandler}) => {
         setIsOpened(!isOpened)
     }
     const closeHandler = () => {
+        setValue('')
+        setColor(colors[0])
         setIsOpened(false)
     }
     const addFolder = (e) => {
@@ -29,7 +31,10 @@ const AddListBtn = ({colors, submitHandler}) => {
         }
 
         submitHandler(obj)
+
         setValue('')
+        setIsOpened(false)
+        setColor(colors[0])
     }
 
     return (

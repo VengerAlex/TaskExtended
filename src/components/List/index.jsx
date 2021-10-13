@@ -3,14 +3,13 @@ import ListItem from "./ListItem";
 import React, {useState} from "react";
 
 
-const List = ({items, popupHandeler, setItems}) => {
-    const [active, setActive] = useState(1)
-
-    const removeItems = (folder) => {
-        const folders = items.filter(el => el.id !== folder.id)
-
-        setItems(folders)
+const List = ({items, popupHandeler, removeItems, isRemovable, setActive, active}) => {
+    const onRemoveFolder = (el) => {
+        if(window.confirm('Are you sure you want do delete this item ? ')){
+            removeItems(el)
+        }
     }
+
 
     return (
         <ul
@@ -19,15 +18,15 @@ const List = ({items, popupHandeler, setItems}) => {
         >
             {items && items.map(el => (
                 <li
-                    onClick={() => setActive(el.id)}
+                    onClick={() => setActive(el)}
                     key={el.title}
                     className={active === el.id ? 'active' : ''}
                 >
-                    <img
-                        onClick={() => removeItems(el)}
-                        className={active === el.id ? 'list__close active' : 'list__close'}
+                    {isRemovable && <img
+                        onClick={() => onRemoveFolder(el)}
+                        className='list__close'
                         src='/img/close.svg' alt=""
-                    />
+                    />}
 
                     {el.icon
                         ? <img className='list__img' src={el.icon} alt="#"/>

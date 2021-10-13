@@ -12,29 +12,44 @@ const App = (props) => {
         return el
     }))
     const [thing, setThing] = useState(tasks)
+    const [active, setActive] = useState(1)
 
     const submitHandler = (obj) => {
         setItems(prev => [...prev, obj])
+    }
+    const removeItems = (folder) => {
+        const folders = items.filter(el => el.id !== folder.id)
+
+        setItems(folders)
+    }
+    const todoAddHandler = post => {
+        setThing(prev => [...prev, post])
     }
 
     return (
         <div className='todo'>
             <div className="todo__sidebar">
-                <ul className="list">
-                    <li><img className='list__img' src='/img/list.svg' alt="#"/>
-                        <span>All Tasks</span>
-                    </li>
-                </ul>
                 <List
+                    isRemovable={false}
+                    items={[{title: 'All items', icon: '/img/list.svg'}]}
+                />
+                <List
+                    active={active}
+                    setActive={(el) => setActive(el)}
                     items={items}
-                    setItems={setItems}
+                    removeItems={removeItems}
+                    isRemovable
                 />
                 <AddListBtn
                     colors={colors}
                     submitHandler={submitHandler}
                 />
             </div>
-            <Tasks thing={thing}/>
+            <Tasks
+                todoAddHandler={todoAddHandler}
+                color={active.color}
+                title={active.title}
+                thing={thing}/>
         </div>
     )
 }
