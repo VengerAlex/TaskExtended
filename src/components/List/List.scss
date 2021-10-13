@@ -25,12 +25,16 @@
     padding: 10px 12px;
     margin-bottom: 5px;
     position: relative;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover{
+      background-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    }
 
     &.active {
       background-color: #fff;
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
-      border-radius: 4px;
-      padding: 10px 12px;
     }
 
     .badge {
@@ -59,7 +63,7 @@
 
   &__close {
     position: absolute;
-    right: 0;
+    right: 13px;
     height: 10px;
     width: 10px;
     display: none;

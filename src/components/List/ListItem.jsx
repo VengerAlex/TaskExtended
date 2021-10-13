@@ -6,9 +6,9 @@ const ListItem = (props) => {
             <img className='list__close' src={props.isRemovable ? '/img/close.svg' : ''} alt=""/>
             {props.el.icon
                 ? <img className='list__img' src={props.el.icon} alt="#"/>
-                : <i className={`badge badge--${props.el.color}`}></i>
+                : <i className='badge' style={{backgroundColor: props.el.color}}></i>
             }
-            <span>{props.el.title}</span>
+            <span >{props.el.title}</span>
         </li>
     );
 };

@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import List from "../List";
 import './AddListBtn.scss'
 
-const AddListBtn = ({data}) => {
+const AddListBtn = ({colors, setItems}) => {
     const [isOpened, setIsOpened] = useState(false)
-    const [color, setColor] = useState(data.colors[0])
+    const [color, setColor] = useState(colors[0])
     const [value, setValue] = useState('')
 
     const popupHandler = () => {
@@ -16,16 +16,18 @@ const AddListBtn = ({data}) => {
     }
     const submitHandler = (e) => {
         e.preventDefault()
+        if(value === '') alert('pls name your folder')
 
         const obj = {
             title: value,
-            color: color.hex
+            color: color.hex,
+            colorId: color.id
         }
-
         console.log(obj)
+
+        setItems(prev => [...prev, obj])
         setValue('')
     }
-
 
     return (
         <div className='popup'>
@@ -47,7 +49,7 @@ const AddListBtn = ({data}) => {
                     className=" popup__close">
                     <img src="img/close.svg" alt="close btn"/>
                 </button>
-                {data.colors.map(el => (
+                {colors.map(el => (
                     <span
                         onClick={() => setColor(el)}
                         key={el.id}

@@ -1,9 +1,16 @@
+import {useState} from "react";
+
 import List from "./components/List/index";
 import AddListBtn from "./components/AddListBtn/AddListBtn";
-import DB from './db.json'
+import {lists, colors} from './db.json'
 
 const App = (props) => {
-    console.log(DB)
+    const [items, setItems] = useState(lists.map((el) => {
+                el.color = colors.filter(color => color.id === el.colorId)[0].name
+
+                return el
+    })
+    )
 
     return (
         <div className='todo'>
@@ -13,16 +20,16 @@ const App = (props) => {
                     isRemovable = {false}
                 />
                 <List
-                    items={[
-                        {color: 'green', title: 'Shops'},
-                        {color: 'blue', title: 'Frontend'},
-                        {color: 'pink', title: 'Films'}]}
+                    items={items}
                     isRemovable
                 />
-                <AddListBtn data={DB}/>
+                <AddListBtn
+                    colors={colors}
+                    setItems={setItems}
+                />
             </div>
             <div className="todo__tasks">
-                <h1>d</h1>
+                <h1>Todo items</h1>
             </div>
         </div>
     )
