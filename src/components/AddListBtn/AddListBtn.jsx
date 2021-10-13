@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import List from "../List";
 import './AddListBtn.scss'
 
-const AddListBtn = ({colors, setItems}) => {
+const AddListBtn = ({colors, submitHandler}) => {
     const [isOpened, setIsOpened] = useState(false)
     const [color, setColor] = useState(colors[0])
     const [value, setValue] = useState('')
@@ -14,17 +14,21 @@ const AddListBtn = ({colors, setItems}) => {
     const closeHandler = () => {
         setIsOpened(false)
     }
-    const submitHandler = (e) => {
+    const addFolder = (e) => {
         e.preventDefault()
-        if(value === '') alert('pls name your folder')
+        if(value === '') {
+            alert('pls name your folder')
 
-        const obj = {
-            title: value,
-            color: color.hex,
-            colorId: color.id
+            return
         }
 
-        setItems(prev => [...prev, obj])
+        const obj = {
+            id: Math.random(),
+            title: value,
+            color: color.hex,
+        }
+
+        submitHandler(obj)
         setValue('')
     }
 
@@ -57,7 +61,7 @@ const AddListBtn = ({colors, setItems}) => {
                     ></span>
                 ))}
                 <button
-                    onClick={submitHandler}
+                    onClick={addFolder}
                     className='btn-default popup__btn'
                 >
                     Add New Folder
