@@ -1,18 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import List from "./components/List/index";
 import AddListBtn from "./components/AddListBtn/AddListBtn";
-import {lists, colors, tasks} from './db.json'
+import { colors} from './db.json'
 import Tasks from "./components/Tasks/Tasks";
+import axios from "axios";
 
 const App = (props) => {
-    const [items, setItems] = useState(lists.map((el) => {
-        el.color = colors.filter(color => color.id === el.colorId)[0].name
-
-        return el
-    }))
-    const [thing, setThing] = useState(tasks)
+    const [items, setItems] = useState([])
     const [active, setActive] = useState(1)
+    const [activeItem, setActiveItem] = useState([])
 
     const submitHandler = (obj) => {
         setItems(prev => [...prev, obj])
@@ -22,9 +19,13 @@ const App = (props) => {
 
         setItems(folders)
     }
-    const todoAddHandler = post => {
-        setThing(prev => [...prev, post])
-    }
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/lists?_embed=tasks')
+            .then(({data}) => setItems(data))
+
+    }, [])
+
 
     return (
         <div className='todo'>
@@ -34,8 +35,8 @@ const App = (props) => {
                     items={[{title: 'All items', icon: '/img/list.svg'}]}
                 />
                 <List
-                    active={active}
-                    setActive={(el) => setActive(el)}
+                    onClickItem={(el) => setActiveItem(el)}
+                    activeItem={activeItem}
                     items={items}
                     removeItems={removeItems}
                     isRemovable
@@ -45,11 +46,9 @@ const App = (props) => {
                     submitHandler={submitHandler}
                 />
             </div>
-            <Tasks
-                todoAddHandler={todoAddHandler}
-                color={active.color}
-                title={active.title}
-                thing={thing}/>
+            {items && <Tasks
+                items={activeItem}
+            />}
         </div>
     )
 }

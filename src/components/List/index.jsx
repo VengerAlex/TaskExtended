@@ -1,16 +1,18 @@
 import './List.scss'
 import ListItem from "./ListItem";
 import React, {useState} from "react";
+import axios from "axios";
 
 
-const List = ({items, popupHandeler, removeItems, isRemovable, setActive, active}) => {
+const List = ({onClickItem,items, popupHandeler, removeItems, isRemovable, activeItem}) => {
     const onRemoveFolder = (el) => {
         if(window.confirm('Are you sure you want do delete this item ? ')){
-            removeItems(el)
+            axios.delete('http://localhost:5000/lists/' + el.id)
+                .then(el => removeItems(el))
         }
     }
 
-
+    console.log(activeItem)
     return (
         <ul
             onClick={popupHandeler}
@@ -18,22 +20,21 @@ const List = ({items, popupHandeler, removeItems, isRemovable, setActive, active
         >
             {items && items.map(el => (
                 <li
-                    onClick={() => setActive(el)}
+                    onClick={onClickItem ? () => onClickItem(el) : null}
                     key={el.title}
-                    className={active === el.id ? 'active' : ''}
+                    className={activeItem === el ? 'active' : ''}
                 >
                     {isRemovable && <img
                         onClick={() => onRemoveFolder(el)}
                         className='list__close'
                         src='/img/close.svg' alt=""
                     />}
-
                     {el.icon
                         ? <img className='list__img' src={el.icon} alt="#"/>
-                        : <i className='badge' style={{backgroundColor: el.color}}></i>
+                        : <i className='badge' style={{backgroundColor: el.color ? el.color : 'pink'}}></i>
                     }
-
-                    <span >{el.title}</span>
+                    <span className='list__text'>{el.title}</span>
+                    {isRemovable && <span className='dot'>{el.tasks ? el.tasks.length : '0'}</span>}
                 </li>
             ))}
         </ul>

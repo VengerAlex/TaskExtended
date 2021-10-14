@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import List from "../List";
 import './AddListBtn.scss'
+import axios from "axios";
+import {logDOM} from "@testing-library/react";
 
 const AddListBtn = ({colors, submitHandler}) => {
     const [isOpened, setIsOpened] = useState(false)
     const [color, setColor] = useState(colors[0])
     const [value, setValue] = useState('')
+
+    useEffect(() => {
+        if (Array.isArray(colors)) {
+            setColor(colors[0]);
+        }
+    }, [colors]);
 
     const popupHandler = () => {
         setIsOpened(!isOpened)
@@ -30,7 +38,10 @@ const AddListBtn = ({colors, submitHandler}) => {
             color: color.hex,
         }
 
-        submitHandler(obj)
+        axios.post('http://localhost:5000/lists', {id: Math.random(), title: value, color: color.name})
+            .then(({data}) => submitHandler(data))
+
+        console.log(color)
 
         setValue('')
         setIsOpened(false)
