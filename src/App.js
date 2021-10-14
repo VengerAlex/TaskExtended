@@ -23,7 +23,6 @@ const App = (props) => {
     useEffect(() => {
         axios.get('http://localhost:5000/lists?_embed=tasks')
             .then(({data}) => setItems(data))
-
     }, [])
 
 
