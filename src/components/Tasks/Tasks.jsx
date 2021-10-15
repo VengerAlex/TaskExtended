@@ -16,13 +16,13 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
         }
 
         axios.patch('http://localhost:5000/lists/' +  items.id, { title: newTitle })
-            .catch(() => alert('Smth happened'))
+            .catch(() => alert('something happened'))
     }
 
     return (
         <div className='todo__tasks'>
             <h1 className='todo__title'>
-                {items.title ? items.title : 'ALL ITEMSs'}
+                {items.title ? items.title : 'ALL BASTARDS'}
                 <img
                     onClick={editFunc}
                     src="img/edit.svg"
