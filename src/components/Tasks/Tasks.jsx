@@ -22,7 +22,7 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
     return (
         <div className='todo__tasks'>
             <h1 className='todo__title'>
-                {items.title ? items.title : 'ALL ITEMS'}
+                {items.title ? items.title : 'ALL ITEMSs'}
                 <img
                     onClick={editFunc}
                     src="img/edit.svg"
