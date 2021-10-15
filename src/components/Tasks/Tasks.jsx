@@ -4,7 +4,7 @@ import axios from "axios";
 
 import AddTaskForm from "./AddTaskForm";
 
-const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
+const Tasks = ({items, onEditTitle, addTaskToFolder, setItems}) => {
 
 
     const editFunc = () => {
@@ -17,6 +17,16 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
         axios.patch('http://localhost:5000/lists/' +  items.id, { title: newTitle })
             .catch(() => alert('something happened'))
     }
+    const onRemove = (el) => {
+        if(window.confirm('Are u sure ? ')){
+            axios.delete('http://localhost:5000/tasks/' +  el.id)
+                .catch(() => alert('something happened'))
+        }
+
+        setItems(prev => prev, el)
+        return
+    }
+    
 
     return (
         <div className='todo__tasks'>
@@ -50,7 +60,9 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
                         type="text"
                         value={el.text}
                     />
-                    <button style={{marginRight: 20}}>DELETE</button>
+                    <button
+                        onClick={() => onRemove(el)}
+                        style={{marginRight: 20}}>DELETE</button>
                     <button>EDIT</button>
                 </div>
             ))

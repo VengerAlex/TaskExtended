@@ -94,6 +94,7 @@ const App = (props) => {
             <Route exact path='/'>
                 {items && items.map(el => (
                     <Tasks
+                        setItems={setItems}
                         items={el}
                         onEditTitle={onEditTitle}
                         addTaskToFolder={addTaskToFolder}
