@@ -41,7 +41,6 @@ const AddListBtn = ({colors, submitHandler}) => {
         axios.post('http://localhost:5000/lists', {id: Math.random(), title: value, color: color.name})
             .then(({data}) => submitHandler(data))
 
-        console.log(color)
 
         setValue('')
         setIsOpened(false)

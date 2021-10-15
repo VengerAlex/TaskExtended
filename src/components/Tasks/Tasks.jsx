@@ -20,8 +20,9 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
 
     return (
         <div className='todo__tasks'>
-            <h1 className='todo__title'>
-                {items.title ? items.title : 'ALL BASTARDS'}
+            <h1
+                className='todo__title'>
+                {items && items.title ? items.title : 'ALL BASTARDS'}
                 <img
                     onClick={editFunc}
                     src="img/edit.svg"
@@ -49,6 +50,8 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
                         type="text"
                         value={el.text}
                     />
+                    <button style={{marginRight: 20}}>DELETE</button>
+                    <button>EDIT</button>
                 </div>
             ))
             : <div className='empty-box'>Your folder is empty</div>

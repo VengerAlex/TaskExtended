@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {Route, Link, useHistory, useLocation} from 'react-router-dom'
 
 import List from "./components/List/index";
 import AddListBtn from "./components/AddListBtn/AddListBtn";
@@ -8,8 +9,9 @@ import axios from "axios";
 
 const App = (props) => {
     const [items, setItems] = useState([])
-    const [active, setActive] = useState(1)
-    const [activeItem, setActiveItem] = useState([])
+    const [activeItem, setActiveItem] = useState(null)
+    const history = useHistory()
+    const location = useLocation()
 
 
     const submitHandler = (obj) => {
@@ -42,24 +44,42 @@ const App = (props) => {
             return el
         })
         setItems(newList)
-
     }
 
     useEffect(() => {
         axios.get('http://localhost:5000/lists?_embed=tasks')
             .then(({data}) => setItems(data))
     }, [])
-    // console.log(activeItem)
+
+    useEffect(() => {
+        const idOfLoc = +(location.pathname.split('lists/')[1])
+
+        if(items){
+            const list = items.find(el => el.id === idOfLoc)
+
+            setActiveItem(list)
+        }
+
+        // setActiveItem(specObj)
+    }, [items, location.pathname])
+
 
     return (
         <div className='todo'>
             <div className="todo__sidebar">
                 <List
+                    onClickItem={(el) => {
+                        history.push(`/`)
+                    }}
                     isRemovable={false}
                     items={[{title: 'All items', icon: '/img/list.svg'}]}
+                    active={true}
+                    // onClickItem={el => setActiveItem(el)}
                 />
                 <List
-                    onClickItem={(el) => setActiveItem(el)}
+                    onClickItem={(el) => {
+                        history.push(`/lists/${el.id}`)
+                    }}
                     activeItem={activeItem}
                     items={items}
                     removeItems={removeItems}
@@ -70,11 +90,24 @@ const App = (props) => {
                     submitHandler={submitHandler}
                 />
             </div>
-            {items && <Tasks
-                items={activeItem}
-                onEditTitle={onEditTitle}
-                addTaskToFolder={addTaskToFolder}
-            />}
+            <div className="right-side">
+            <Route exact path='/'>
+                {items && items.map(el => (
+                    <Tasks
+                        items={el}
+                        onEditTitle={onEditTitle}
+                        addTaskToFolder={addTaskToFolder}
+                    />
+                ))}
+            </Route>
+            </div>
+            <Route path='/lists/:id'>
+                {items && <Tasks
+                    items={activeItem}
+                    onEditTitle={onEditTitle}
+                    addTaskToFolder={addTaskToFolder}
+                />}
+            </Route>
         </div>
     )
 }

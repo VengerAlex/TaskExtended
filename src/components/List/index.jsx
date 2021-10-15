@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import axios from "axios";
 
 
-const List = ({onClickItem,items, popupHandeler, removeItems, isRemovable, activeItem}) => {
+const List = ({onClickItem,items, popupHandeler, removeItems, isRemovable, activeItem, active}) => {
     const onRemoveFolder = (el) => {
         if(window.confirm('Are you sure you want do delete this item ? ')){
             axios.delete('http://localhost:5000/lists/' + el.id)
@@ -12,7 +12,8 @@ const List = ({onClickItem,items, popupHandeler, removeItems, isRemovable, activ
         }
     }
 
-    console.log(activeItem)
+
+
     return (
         <ul
             onClick={popupHandeler}
@@ -22,7 +23,7 @@ const List = ({onClickItem,items, popupHandeler, removeItems, isRemovable, activ
                 <li
                     onClick={onClickItem ? () => onClickItem(el) : null}
                     key={el.title}
-                    className={activeItem === el ? 'active' : ''}
+                    className={activeItem === el.id ? 'active' : ''}
                 >
                     {isRemovable && <img
                         onClick={() => onRemoveFolder(el)}

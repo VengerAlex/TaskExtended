@@ -166,8 +166,8 @@ button{
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 750px;
-  height: 550px;
+  width: calc(80vw - 40px);
+  height: calc(100vh - 100px);
   transform: translate(-50%, -50%);
   border-radius: 10px;
   box-shadow: 1px 2px 20px #f3f3f3;
@@ -209,5 +209,9 @@ button{
     background-color: #d8d8d8;
   }
 }
-
+.right-side{
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
 
