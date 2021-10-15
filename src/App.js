@@ -35,6 +35,7 @@ const App = (props) => {
     }
 
 
+
     const addTaskToFolder = (listId, task) => {
 
         const newList = items.map(el => {
