@@ -5,7 +5,6 @@ import axios from "axios";
 import AddTaskForm from "./AddTaskForm";
 
 const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
-    const [inputSearch, setInputSearch] = useState('')
 
 
     const editFunc = () => {
@@ -56,8 +55,6 @@ const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
             }
             <AddTaskForm
                 addTaskToFolder={addTaskToFolder}
-                inputSearch={inputSearch}
-                setInputSearch={setInputSearch}
                 items={items}
             />
         </div>

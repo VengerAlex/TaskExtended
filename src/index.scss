@@ -205,6 +205,9 @@ button{
   &:hover{
     background-color: darken(#42b883, 10%);
   }
+  &:disabled{
+    background-color: #d8d8d8;
+  }
 }
 
 

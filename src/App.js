@@ -31,11 +31,18 @@ const App = (props) => {
         })
         setItems(newList)
     }
-    const addTaskToFolder = (task) => {
-        console.log(task)
 
-        const helper = items.map(el => el.id === task.id ? task : el)
-        console.log(helper)
+
+    const addTaskToFolder = (listId, task) => {
+
+        const newList = items.map(el => {
+            if(el.id === listId){
+                el.tasks = [...el.tasks, task]
+            }
+            return el
+        })
+        setItems(newList)
+
     }
 
     useEffect(() => {
