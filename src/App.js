@@ -11,6 +11,7 @@ const App = (props) => {
     const [active, setActive] = useState(1)
     const [activeItem, setActiveItem] = useState([])
 
+
     const submitHandler = (obj) => {
         setItems(prev => [...prev, obj])
     }
@@ -19,12 +20,29 @@ const App = (props) => {
 
         setItems(folders)
     }
+    const onEditTitle = (post, newTitle) => {
+        const currTitleId = post.id;
+
+        const newList = items.map(el => {
+            if(post.id === el.id){
+                el.name = newTitle;
+            }
+            return
+        })
+        setItems(newList)
+    }
+    const addTaskToFolder = (task) => {
+        console.log(task)
+
+        const helper = items.map(el => el.id === task.id ? task : el)
+        console.log(helper)
+    }
 
     useEffect(() => {
         axios.get('http://localhost:5000/lists?_embed=tasks')
             .then(({data}) => setItems(data))
     }, [])
-
+    // console.log(activeItem)
 
     return (
         <div className='todo'>
@@ -47,6 +65,8 @@ const App = (props) => {
             </div>
             {items && <Tasks
                 items={activeItem}
+                onEditTitle={onEditTitle}
+                addTaskToFolder={addTaskToFolder}
             />}
         </div>
     )

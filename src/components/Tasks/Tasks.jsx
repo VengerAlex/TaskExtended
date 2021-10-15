@@ -1,21 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Tasks.scss'
+import axios from "axios";
 
-const Tasks = ({items}) => {
+import AddTaskForm from "./AddTaskForm";
+
+const Tasks = ({items, onEditTitle, addTaskToFolder}) => {
     const [inputSearch, setInputSearch] = useState('')
 
-    const submitHandler = () => {
-        const obj = {id: Math.random(), text: inputSearch}
 
-        // todoAddHandler(obj)
-        setInputSearch('')
+    const editFunc = () => {
+        const newTitle = prompt('Name your folder -', items.title)
+
+        if(newTitle){
+            onEditTitle(items, newTitle)
+        }
+
+        axios.patch('http://localhost:5000/lists/' +  items.id, { title: newTitle })
+            .catch(() => alert('Smth happened'))
     }
 
     return (
         <div className='todo__tasks'>
             <h1 className='todo__title'>
-                {items && items.title}
-                <img src="img/edit.svg" alt="#"/>
+                {items.title ? items.title : 'ALL ITEMS'}
+                <img
+                    onClick={editFunc}
+                    src="img/edit.svg"
+                     alt="#"
+                />
             </h1>
             {items?.tasks?.length > 0
                 ? items.tasks.map(el => (
@@ -42,20 +54,12 @@ const Tasks = ({items}) => {
             ))
             : <div className='empty-box'>Your folder is empty</div>
             }
-            <div className="todo__form">
-                <input
-                    className='input todo__input'
-                    value={inputSearch}
-                    onChange={(e) => setInputSearch(e.target.value)}
-                    placeholder='New Task'
-                    type="text"
-                />
-                <button
-                    onClick={submitHandler}
-                    className='todo__btn'>
-                    <img src="/img/add.svg" alt="add task"/>
-                </button>
-            </div>
+            <AddTaskForm
+                addTaskToFolder={addTaskToFolder}
+                inputSearch={inputSearch}
+                setInputSearch={setInputSearch}
+                items={items}
+            />
         </div>
     );
 };
